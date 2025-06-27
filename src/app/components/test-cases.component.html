@@ -1,0 +1,31 @@
+<form [formGroup]="form">
+  <div class="container">
+    <h1>Required Remainder</h1>
+    <mat-form-field appearance="outline" class="num-cases-field">
+      <mat-label>Number of test cases</mat-label>
+      <input matInput type="number" formControlName="numCases">
+      <mat-error *ngIf="form.get('numCases')?.hasError('min') && (form.get('numCases')?.dirty || form.get('numCases')?.touched)">
+        The number of test cases must be at least 1.
+      </mat-error>
+      <mat-error *ngIf="form.get('numCases')?.hasError('required') && (form.get('numCases')?.dirty || form.get('numCases')?.touched)">
+        The number of test cases is required.
+      </mat-error>
+    </mat-form-field>
+    <div class="form-errors" *ngIf="form.invalid && (form.dirty || form.touched)">
+      <span *ngIf="form.get('numCases')?.hasError('min')">
+        ⚠️ The number of test cases must be at least 1.
+      </span>
+      <span *ngIf="form.get('numCases')?.hasError('required')">
+        ⚠️ The number of test cases is required.
+      </span>
+    </div>
+    <div class="cards-grid">
+      <app-test-case-card *ngFor="let caseForm of cases.controls; let i = index"
+        [form]="caseForm"
+        [index]="i"
+        [result]="results[i]">
+      </app-test-case-card>
+    </div>
+    <button mat-raised-button color="accent" class="calculate-btn" (click)="calculate()" [disabled]="form.invalid">CALCULATE</button>
+  </div>
+</form> 

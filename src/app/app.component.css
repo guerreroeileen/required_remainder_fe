@@ -1,0 +1,13 @@
+mat-card {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .result {
+    margin-top: 16px;
+    font-size: 18px;
+  }

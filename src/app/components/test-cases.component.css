@@ -1,0 +1,21 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+.num-cases-field {
+  width: 250px;
+  margin-bottom: 16px;
+  display: block;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 24px 0;
+}
+.calculate-btn {
+  width: 100%;
+  font-size: 1.2em;
+  margin-top: 16px;
+} 

@@ -1,0 +1,12 @@
+.inputs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.result {
+  margin-top: 8px;
+  font-size: 1.1em;
+}
+mat-card {
+  margin-bottom: 16px;
+} 

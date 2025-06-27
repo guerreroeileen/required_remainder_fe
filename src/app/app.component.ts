@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { TestCasesComponent } from './components/test-cases.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
+  imports: [TestCasesComponent],
+  template: '<app-test-cases></app-test-cases>',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'required_remainder_fe';
-}
+export class AppComponent {}

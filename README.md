@@ -1,27 +1,84 @@
-# RequiredRemainderFe
+# Required Remainder Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.4.
+An Angular application that provides a user interface for solving the "Required Remainder" algorithmic problem. The frontend allows users to input test cases and view results from the backend API.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🏗️ Architecture
 
-## Code scaffolding
+### Frontend (Angular)
+- **Framework**: Angular 18.1.4
+- **Language**: TypeScript
+- **Build Tool**: Angular CLI
+- **Deployment**: AWS S3 + CloudFront
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Infrastructure (AWS)
+- **Storage**: S3 Bucket for static files
+- **CDN**: CloudFront for global distribution
+- **Infrastructure as Code**: CloudFormation templates
 
-## Build
+## 📋 Prerequisites
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Local Development
+- Node.js 18+ 
+- npm or yarn
+- Angular CLI: `npm install -g @angular/cli`
 
-## Running unit tests
+### AWS Deployment
+- AWS CLI configured
+- AWS credentials with appropriate permissions
+- GitHub Actions secrets configured
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 🛠️ Setup Instructions
 
-## Running end-to-end tests
+### Local Development
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-## Further help
+2. **Run development server**
+   ```bash
+   ng serve
+   ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+   Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+3. **Build for production**
+   ```bash
+   ng build
+   ```
+
+   The build artifacts will be stored in the `dist/` directory.
+
+### AWS Deployment
+
+The frontend is automatically deployed via GitHub Actions when you push to the main branch. The workflow will:
+
+1. Install dependencies
+2. Build the application
+3. Deploy to S3
+4. Invalidate CloudFront cache
+
+
+
+
+## 🚀 Deployment
+
+### GitHub Actions Workflow
+
+The frontend uses GitHub Actions for CI/CD. The workflow (`/.github/workflows/aws.yml`) will:
+
+1. **Setup**: Install Node.js and dependencies
+2. **Build**: Create production build
+3. **Deploy**: Upload to S3 and invalidate CloudFront
+
+### Required GitHub Secrets
+
+Configure these secrets in your GitHub repository:
+
+| Secret | Description | Required |
+|--------|-------------|----------|
+| `AWS_ACCESS_KEY_ID` | AWS access key | ✅ |
+| `AWS_SECRET_ACCESS_KEY` | AWS secret key | ✅ |
+| `CLOUDFRONT_DISTRIBUTION_ID` | CloudFront distribution ID | ✅ |

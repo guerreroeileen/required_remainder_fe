@@ -21,8 +21,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Build Angular app
-      run: npm run build
+    - name: Build Angular app (client-side only)
+      run: npm run build -- --configuration production
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -31,12 +31,30 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
+    - name: Get build output directory
+      id: get-output-dir
+      run: |
+        # Read the output path from angular.json dynamically
+        OUTPUT_DIR=$(node -e "
+          const config = require('./angular.json');
+          const projectName = Object.keys(config.projects)[0];
+          console.log(config.projects[projectName].architect.build.options.outputPath);
+        ")
+        echo "output_dir=$OUTPUT_DIR" >> $GITHUB_OUTPUT
+        echo "Build output directory: $OUTPUT_DIR"
+
     - name: Upload to S3
       run: |
-        aws s3 sync dist/required-remainder-fe/ s3://required-remainder-fe-bucket --delete
+        aws s3 sync ${{ steps.get-output-dir.outputs.output_dir }}/ s3://required-remainder-fe-bucket --delete
 
     - name: Invalidate CloudFront cache
       run: |
-        aws cloudfront create-invalidation \
-          --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-          --paths "/*"
+        if [ ! -z "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" ]; then
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+          echo "CloudFront cache invalidated successfully"
+        else
+          echo "No CloudFront Distribution ID provided - skipping cache invalidation"
+        fi
+      continue-on-error: true

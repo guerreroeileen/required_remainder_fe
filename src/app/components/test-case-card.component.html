@@ -1,0 +1,22 @@
+<mat-card>
+  <h3>Test Case {{ index + 1 }}</h3>
+  <div [formGroup]="form">
+    <div class="inputs">
+      <mat-form-field appearance="outline">
+        <mat-label>x</mat-label>
+        <input matInput type="number" formControlName="x">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>y</mat-label>
+        <input matInput type="number" formControlName="y">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>n</mat-label>
+        <input matInput type="number" formControlName="n">
+      </mat-form-field>
+    </div>
+    <div class="result" *ngIf="result !== undefined">
+      <span>Result: <strong>{{ result }}</strong></span>
+    </div>
+  </div>
+</mat-card> 
