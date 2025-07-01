@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface TestCase {
   x: number;
@@ -14,11 +15,11 @@ export interface TestCaseResult {
 
 @Injectable({ providedIn: 'root' })
 export class RequiredRemainderService {
-  private apiUrl = '/api/required-remainder';
+  private apiUrl = `${environment.apiUrl}/solve`;
 
   constructor(private http: HttpClient) {}
 
-  sendTestCases(testCases: TestCase[]): Observable<TestCaseResult[]> {
-    return this.http.post<TestCaseResult[]>(this.apiUrl, { testCases });
+  sendTestCases(testCases: TestCase[]): Observable<number[]> {
+    return this.http.post<number[]>(this.apiUrl, testCases);
   }
 } 

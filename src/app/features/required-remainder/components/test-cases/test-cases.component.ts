@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { RequiredRemainderService, TestCase } from '../services/required-remainder.service';
+import { RequiredRemainderService, TestCase } from '../../../../core/services/required-remainder.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { TestCaseCardComponent } from './test-case-card.component';
+import { TestCaseCardComponent } from '../test-case-card/test-case-card.component';
 
 @Component({
   selector: 'app-test-cases',
@@ -64,9 +64,8 @@ export class TestCasesComponent {
   calculate() {
     if (this.form.invalid) return;
     const testCases: TestCase[] = this.cases.value;
-    console.log("this is the test case: ", this.cases)
-    //this.rrService.sendTestCases(testCases).subscribe(results => {
-      //this.results = results.map(r => r.result);
-    //});
+    this.rrService.sendTestCases(testCases).subscribe(results => {
+      this.results = results;
+    });
   }
 } 

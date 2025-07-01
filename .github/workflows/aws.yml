@@ -6,9 +6,14 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
+    env:
+      ECR_REPOSITORY: required-remainder-backend
+      IMAGE_TAG: ${GITHUB_SHA::7}
+      EB_APPLICATION_NAME: required-remainder-backend
+      EB_ENVIRONMENT_NAME: required-remainder-backend-env
+      S3_BUCKET: required-remainder-fe-bucket
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -20,6 +25,9 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+
+    - name: Run tests
+      run: npm test -- --watch=false --browsers=ChromeHeadless
 
     - name: Build Angular app (client-side only)
       run: npm run build -- --configuration production
